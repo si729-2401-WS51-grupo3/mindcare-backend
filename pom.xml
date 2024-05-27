@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>pe.edu.upc.mind</groupId>
-	<artifactId>mind-care-platform</artifactId>
+	<artifactId>mindcare-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>mind-care-platform</name>
+	<name>mindcare-backend</name>
 	<description>Project for Spring Boot</description>
 	<properties>
 		<java.version>21</java.version>

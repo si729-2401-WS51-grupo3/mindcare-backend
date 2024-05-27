@@ -1,5 +1,4 @@
 package pe.edu.upc.mind.mind_care_platform;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
