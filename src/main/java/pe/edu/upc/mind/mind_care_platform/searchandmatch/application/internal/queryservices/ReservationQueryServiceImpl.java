@@ -5,14 +5,13 @@ import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.entities.R
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.queries.GetAllPsychologistsQuery;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.queries.GetPatientIdQuery;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.services.ReservationQueryService;
-import pe.edu.upc.mind.mind_care_platform.searchandmatch.infrastructure.persistence.jpa.repositories.ReservationRepository;
 
 import java.util.Optional;
 
 @Service
 public class ReservationQueryServiceImpl implements ReservationQueryService {
 
-  private final ReservationRepository reservationRepository;
+  private ReservationR reservationRepository;
 
   public ReservationQueryServiceImpl(ReservationRepository reservationRepository) {
     this.reservationRepository = reservationRepository;
