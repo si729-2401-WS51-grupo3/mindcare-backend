@@ -1,2 +1,4 @@
-package pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.queries;public record GetPatientIdQuery() {
+package pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.queries;
+
+public record GetPatientIdQuery(Long PatientId) {
 }
