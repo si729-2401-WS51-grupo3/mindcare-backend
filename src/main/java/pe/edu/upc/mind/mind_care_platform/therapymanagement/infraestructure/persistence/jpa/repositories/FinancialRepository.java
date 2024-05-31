@@ -11,5 +11,5 @@ import java.util.List;
  * con el parámetro proporcionado
  */
 public interface FinancialRepository extends JpaRepository<Financial, Long>{
-    List<Financial> findByMeetingId(Long meetingId);
+    List<Financial> findByReservationId(Long reservationId);
 }

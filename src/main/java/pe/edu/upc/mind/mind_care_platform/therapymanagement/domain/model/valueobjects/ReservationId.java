@@ -7,14 +7,14 @@ import jakarta.persistence.*;
  */
 @Embeddable
 //bounded context de search and match
-public record MeetingId(Long meetingId) {
-    public MeetingId {
-        if (meetingId == null) {
-            throw new IllegalArgumentException("MeetingId cannot be null");
+public record ReservationId(Long reservationId) {
+    public ReservationId {
+        if (reservationId == null) {
+            throw new IllegalArgumentException("ReservationId cannot be null");
         }
     }
 
-    public MeetingId(){
+    public ReservationId(){
         this(null);
     }
 }

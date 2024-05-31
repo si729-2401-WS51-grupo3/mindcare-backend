@@ -4,5 +4,5 @@ package pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.querie
  * detalles de una reunión específica
  * utilizando el ID de la reunión.
  */
-public record getFinancialByMeetingId(Long meetingId) {
+public record getFinancialByReservationId(Long reservationId) {
 }
