@@ -41,13 +41,18 @@ public class AppoinmentData extends AuditableModel {
     @NotNull
     private PatientId patientId;
 
-    public AppoinmentData(String sessionName, LocalDateTime date, LocalDateTime time, MeetingType meetingType, PsychologistId psychologistId, PatientId patientId) {
+    @ManyToOne
+    @JoinColumn(name = "next_appointment_id")
+    private AppoinmentData nextAppointment;
+
+    public AppoinmentData(String sessionName, LocalDateTime date, LocalDateTime time, MeetingType meetingType, PsychologistId psychologistId, PatientId patientId, AppoinmentData nextAppointment) {
         this.sessionName = sessionName;
         this.date = date;
         this.time = time;
         this.meetingType = meetingType;
         this.psychologistId = psychologistId;
         this.patientId = patientId;
+        this.nextAppointment = nextAppointment;
     }
 
     public AppoinmentData() {
@@ -57,6 +62,7 @@ public class AppoinmentData extends AuditableModel {
         this.meetingType = MeetingType.FIRST_SESSION;
         this.psychologistId = new PsychologistId();
         this.patientId = new PatientId();
+        this.nextAppointment = null;
     }
 
     /**
@@ -67,13 +73,15 @@ public class AppoinmentData extends AuditableModel {
      * @param meetingType The type of the meeting.
      * @param psychologistId The id of the psychologist.
      * @param patientId The id of the patient.
+     * @param nextAppointment The next appointment.
      */
-    public void updateMeeting(String sessionName, LocalDateTime date, LocalDateTime time, MeetingType meetingType, PsychologistId psychologistId, PatientId patientId) {
+    public void updateMeeting(String sessionName, LocalDateTime date, LocalDateTime time, MeetingType meetingType, PsychologistId psychologistId, PatientId patientId, AppoinmentData nextAppointment) {
         this.sessionName = sessionName;
         this.date = date;
         this.time = time;
         this.meetingType = meetingType;
         this.psychologistId = psychologistId;
         this.patientId = patientId;
+        this.nextAppointment = nextAppointment;
     }
 }
