@@ -3,6 +3,7 @@ package pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.aggregates.Reservation;
+import pe.edu.upc.mind.mind_care_platform.shared.domain.model.entity.AuditableModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
