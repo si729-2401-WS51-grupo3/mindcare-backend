@@ -1,8 +1,5 @@
 package pe.edu.upc.mind.mind_care_platform.searchandmatch.application.internal.commandservices;
 import org.springframework.stereotype.Service;
-import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.commands.CreateReservationCommand;
-import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.entities.Reservation;
-import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.services.ReservationCommandService;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.infrastructure.persistence.jpa.repositories.ReservationRepository;
 
 @Service

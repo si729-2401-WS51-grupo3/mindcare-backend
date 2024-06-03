@@ -3,16 +3,13 @@ package pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.valueobje
 import jakarta.persistence.Embeddable;
 
 @Embeddable
-public record Psychologist (Long profileId, String speciality){
-    public Psychologist {
+public record PsychologistId (Long profileId){
+    public PsychologistId {
         if (profileId < 0) {
             throw new IllegalArgumentException("PsychologistId cannot be negative");
         }
-        if (speciality.isBlank()) {
-            throw new IllegalArgumentException("Speciality cannot be empty");
-        }
     }
-    public Psychologist() {
-        this(0L, "");
+    public PsychologistId() {
+        this(0L);
     }
 }

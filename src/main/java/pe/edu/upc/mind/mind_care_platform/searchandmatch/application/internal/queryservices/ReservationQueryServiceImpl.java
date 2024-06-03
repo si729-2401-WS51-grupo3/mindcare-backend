@@ -1,10 +1,8 @@
 package pe.edu.upc.mind.mind_care_platform.searchandmatch.application.internal.queryservices;
 
 import org.springframework.stereotype.Service;
-import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.entities.Reservation;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.queries.GetAllPsychologistsQuery;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.queries.GetPatientIdQuery;
-import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.services.ReservationQueryService;
 
 import java.util.Optional;
 
