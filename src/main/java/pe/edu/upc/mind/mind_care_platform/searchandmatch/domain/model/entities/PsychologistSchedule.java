@@ -1,11 +1,8 @@
 package pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.entities;
 
-package pe.edu.upc.mind.mindcare_platform.searchandmatch.domain.model.entities;
-
 import jakarta.persistence.*;
 import lombok.Getter;
-import pe.edu.upc.mind.mindcare_platform.searchandmatch.domain.model.aggregates.Reservation;
-import pe.edu.upc.mind.mindcare_platform.shared.domain.model.entities.AuditableModel;
+import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.aggregates.Reservation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
