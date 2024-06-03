@@ -1,4 +1,4 @@
-package pe.edu.upc.mind.mind_care_platform;
+package pe.edu.upc.mind.care.platform;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
