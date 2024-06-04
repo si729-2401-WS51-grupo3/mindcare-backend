@@ -20,9 +20,7 @@ public class PsychologistScheduleCommandServiceImpl implements PsychologistSched
     public Long handle(CreatePsychologistScheduleCommand command) {
         var psychologistSchedule = new PsychologistSchedule(
                 command.worked_hours(),
-                command.started_hour(),
-                command.day(),
-                command.hour()
+                command.started_hour()
         ){
         };
         try {

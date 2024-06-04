@@ -6,5 +6,5 @@ import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.valueobjec
 
 import java.util.Date;
 
-public record CreateReservationCommand(Long psychologistId, Date reservationDate, String reservationTime, Long patientId) {
+public record CreateReservationCommand(Date reservationDate, String reservationTime, Long patientId) {
 }

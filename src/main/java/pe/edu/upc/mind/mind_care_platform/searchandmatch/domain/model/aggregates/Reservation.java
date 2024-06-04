@@ -36,22 +36,21 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
     private String reservationTime;
     private Long patientId;
 
-    public Reservation() {
-    }
-    public void createReservation(Date reservationDate, String reservationTime, Long patientId) {
+    public Reservation(Date reservationDate, String reservationTime, Long patientId) {
         this.reservationDate = reservationDate;
         this.reservationTime = reservationTime;
         this.patientId = patientId;
     }
 
-    public static Reservation createFromSchedule(PsychologistSchedule schedule, Date reservationDate, String reservationTime, Long patientId ) throws ParseException {
-        Reservation reservation = new Reservation();
-        reservation.createReservation(reservationDate, reservationTime, patientId);
-        reservation.schedule = schedule;
+    public Reservation() {
 
+    }
+
+    public static Reservation createFromSchedule(PsychologistSchedule schedule, Date reservationDate, String reservationTime, Long patientId ) throws ParseException {
+        Reservation reservation = new Reservation(reservationDate, reservationTime, patientId);
+        reservation.schedule = schedule;
         // Add the reservation to the schedule
         schedule.addReservation(reservation);
-
         return reservation;
     }
 

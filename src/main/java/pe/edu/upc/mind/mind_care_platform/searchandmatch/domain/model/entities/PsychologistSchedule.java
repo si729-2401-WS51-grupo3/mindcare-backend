@@ -35,11 +35,9 @@ public class PsychologistSchedule extends AuditableModel {
     public PsychologistSchedule() {
     }
 
-    public PsychologistSchedule(int worked_hours, int started_hour, String day, String hour) {
+    public PsychologistSchedule(int worked_hours, int started_hour) {
         this.worked_hours = worked_hours;
         this.started_hour = started_hour;
-        this.day = day;
-        this.hour = hour;
         createSchedule();
     }
 
