@@ -3,9 +3,9 @@ package pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.valueobje
 import jakarta.persistence.Embeddable;
 
 @Embeddable
-public record PsychologistId (Long profileId){
+public record PsychologistId (Long psychologistId){
     public PsychologistId {
-        if (profileId < 0) {
+        if (psychologistId < 0) {
             throw new IllegalArgumentException("PsychologistId cannot be negative");
         }
     }
