@@ -1,4 +1,6 @@
 package pe.edu.upc.mind.mind_care_platform.therapymanagement.interfaces.rest.resources;
 
-public record CreateFinancialResource(String patientId,String pyschologistId) {
+import jakarta.validation.constraints.NotNull;
+
+public record CreateFinancialResource(@NotNull String patientId, @NotNull String pyschologistId) {
 }

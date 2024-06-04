@@ -1,5 +1,6 @@
 package pe.edu.upc.mind.mind_care_platform.therapymanagement.interfaces.rest;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,10 @@ public class FinancialsController {
     }
 
     @PostMapping
-    public ResponseEntity<FinancialResource> createFinancial(@RequestBody CreateFinancialResource createFinancialResource) {
+    public ResponseEntity<FinancialResource> createFinancial(@Valid @RequestBody CreateFinancialResource createFinancialResource) {
+        if (createFinancialResource.pyschologistId() == null || createFinancialResource.patientId() == null) {
+            return ResponseEntity.badRequest().build();
+        }
         var createFinancialCommand = CreateFinancialCommandFromResourceAssembler.toCommandFromResource(createFinancialResource);
         var financialId = financialCommandService.handle(createFinancialCommand);
 
