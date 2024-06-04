@@ -45,7 +45,6 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
     }
 
     public static Reservation createFromSchedule(PsychologistSchedule schedule, Date reservationDate, String reservationTime, Long patientId ) throws ParseException {
-
         Reservation reservation = new Reservation();
         reservation.createReservation(reservationDate, reservationTime, patientId);
         reservation.schedule = schedule;
