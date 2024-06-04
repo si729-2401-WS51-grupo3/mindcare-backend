@@ -2,7 +2,9 @@ package pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.aggregates.Reservation;
+import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.commands.CreatePsychologistScheduleCommand;
 import pe.edu.upc.mind.mind_care_platform.shared.domain.model.entity.AuditableModel;
 
 import java.text.SimpleDateFormat;
@@ -19,33 +21,28 @@ public class PsychologistSchedule extends AuditableModel {
     private Long id;
 
     private Long psychologistId;
+    @Setter
     private int worked_hours;
+    @Setter
     private int started_hour;
-    //summary
-    //se utiliza para denotar una colección de elementos básicos (propio de JPA)
-    //que son instancias de un tipo de valor básico o embeddable.
+    private String day;
+    private String hour;
     @ElementCollection
     private List<String> schedule = new ArrayList<>();
-    //summary
-    //La relación entre PsychologistSchedule y Reservation es de uno a muchos.
-    //PsychologistSchedule puede tener muchas Reservation y
-    //una Reservation está asociada a un PsychologistSchedule
     @OneToMany(mappedBy = "schedule")
     private List<Reservation> reservations;
 
     public PsychologistSchedule() {
     }
 
-
-    public PsychologistSchedule(int worked_hours, int started_hour) {
+    public PsychologistSchedule(int worked_hours, int started_hour, String day, String hour) {
         this.worked_hours = worked_hours;
         this.started_hour = started_hour;
+        this.day = day;
+        this.hour = hour;
         createSchedule();
     }
 
-    //summary
-    //summary
-    //creando el horario del psicologo
     private void createSchedule() {
         for (int i = 0; i < worked_hours; i++) {
             int hour = started_hour + i;
