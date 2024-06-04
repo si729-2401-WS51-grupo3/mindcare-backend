@@ -14,4 +14,7 @@ public record PyschologistId(String pyschologistId) {
             throw new IllegalArgumentException("PyschologistId cannot be null");
         }
     }
+    public String getId() {
+        return this.pyschologistId;
+    }
 }

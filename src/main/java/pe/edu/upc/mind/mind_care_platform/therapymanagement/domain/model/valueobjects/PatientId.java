@@ -14,4 +14,12 @@ public record PatientId(String patientId) {
             throw new IllegalArgumentException("PatientId cannot be null");
         }
     }
+    /**
+     *  El método getter simplemente te permite acceder al valor del patientId
+     *  desde fuera de la clase PatientId, pero no te permite cambiar ese valor
+     *  una vez que el objeto PatientId ha sido creado.
+     */
+    public String getId() {
+        return this.patientId;
+    }
 }

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "financials")
 public class Financial extends AbstractAggregateRoot<Financial> {
     @Getter
     @Id
@@ -52,6 +53,7 @@ public class Financial extends AbstractAggregateRoot<Financial> {
         this.status = Status.PENDIENTE;
     }
 
+
     /**
      * Cancel the financial transaction.
      */
@@ -80,5 +82,11 @@ public class Financial extends AbstractAggregateRoot<Financial> {
         return this.status.name().toLowerCase();
     }
 
+    public String getPatientId() {
+        return this.patientId.getId();
+    }
+    public String getPyschologistId() {
+        return this.pyschologistId.getId();
+    }
 
 }

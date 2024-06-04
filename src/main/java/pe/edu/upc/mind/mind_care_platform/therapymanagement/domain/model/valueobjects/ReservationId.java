@@ -12,7 +12,7 @@ public record ReservationId(String reservationId) {
             throw new IllegalArgumentException("ReservationId cannot be null");
         }
     }
-    public ReservationId(){
-        this(null);
+    public String getReservationId(){
+        return this.reservationId;
     }
 }

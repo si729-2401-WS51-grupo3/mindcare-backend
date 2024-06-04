@@ -8,7 +8,8 @@ import pe.edu.upc.mind.mind_care_platform.therapymanagement.interfaces.rest.reso
  * Utilizamos el patron de Assembler  para transformar tus entidades de dominio (Financial) en recursos (FinancialResource)
  */
 public class FinancialResourceFromEntityAssembler {
-    public static Financial toEntityFromResource(FinancialResource resource){
-        return new Financial(new PatientId(resource.patientId()), new PyschologistId(resource.pyschologistId()));
+    public static FinancialResource toResourceFromEntity(Financial financial){
+        return new FinancialResource(financial.getId(), financial.getPatientId(), financial.getPyschologistId());
     };
+
 }
