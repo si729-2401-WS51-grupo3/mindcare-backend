@@ -1,36 +1,84 @@
 package pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.aggregates;
 
 import jakarta.persistence.*;
-import org.apache.logging.log4j.util.Strings;
-import pe.edu.upc.mind.mind_care_platform.shared.domain.model.entities.AuditableModel;
-import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.entities.Amount;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.domain.AbstractAggregateRoot;
+import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.commands.CreateFinancialTransactionCommand;
+import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.entities.Transaction;
+import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.valueobjects.PatientId;
+import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.valueobjects.PyschologistId;
 import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.valueobjects.ReservationId;
+import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.valueobjects.Status;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-public class Financial extends AuditableModel {
+public class Financial extends AbstractAggregateRoot<Financial> {
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
+    @Getter
+    @OneToMany(mappedBy = "financial", cascade = CascadeType.ALL)
+    private List<Transaction> transactions;
 
-    @OneToOne(mappedBy = "financial", cascade = CascadeType.ALL)
-    private Amount amount;
+    @Embedded
+    private PatientId patientId;
+    @Embedded
+    private PyschologistId pyschologistId;
+    /**
+     * The status of the financial transaction.
+     */
 
-    private Long reservationId;
+    private Status status;
 
     public Financial() {
-        this.amount = new Amount(this);
+    }
+
+    public Financial(PatientId patientId, PyschologistId pyschologistId) {
+        this.patientId = patientId;
+        this.pyschologistId = pyschologistId;
+        this.status = Status.PENDIENTE;
+    }
+
+    public Financial(CreateFinancialTransactionCommand command) {
+        this.patientId = new PatientId(command.patientId());
+        this.pyschologistId = new PyschologistId(command.psychologistId());
+        this.transactions = new ArrayList<>();
+        this.status = Status.PENDIENTE;
     }
 
     /**
-     * Updates the transaction information.
-     * @param newAmount The new amount.
-     * @param newReservationId The new meetingDetails.
-     * @return The updated transaction.
+     * Cancel the financial transaction.
      */
-
-    public void updateInformation(Amount newAmount, Long newReservationId) {
-        this.amount = newAmount;
-        this.reservationId = newReservationId;
+    public void cancel() {
+        this.status = Status.CANCELADO;
     }
+    public boolean isCanceled() {
+        return this.status == Status.CANCELADO;
+    }
+
+    /**
+     * Pay the financial transaction.
+     */
+    public void pay() {
+        this.status = Status.PAGADO;
+    }
+    public boolean isPaid() {
+        return this.status == Status.PAGADO;
+    }
+
+    /**
+     * Returns the status of the financial transaction.
+     * @return The status of the financial transaction.
+     */
+    public String getStatus() {
+        return this.status.name().toLowerCase();
+    }
+
+
 }
