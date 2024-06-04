@@ -33,53 +33,27 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
 
     @Setter
     private Date reservationDate;
-
+    private String reservationTime;
     private Long patientId;
 
     public Reservation() {
     }
-
-    public Reservation(Long id, Date reservationDate, Long patientId, PsychologistSchedule schedule) throws ParseException {
-        this.id = id;
+    public void createReservation(Date reservationDate, String reservationTime, Long patientId) {
         this.reservationDate = reservationDate;
+        this.reservationTime = reservationTime;
         this.patientId = patientId;
-        this.schedule = schedule;
-
-    }
-    public void checkReservationTime() throws ParseException {
-        if (!schedule.isWithinWorkingHours(reservationDate)) {
-            throw new IllegalArgumentException("The reservation time is outside the psychologist's working hours.");
-        }
     }
 
+    public static Reservation createFromSchedule(PsychologistSchedule schedule, Date reservationDate, String reservationTime, Long patientId ) throws ParseException {
 
-    // summary
-    //  Actualiza el horario del psicólogo después de reservar una cita.
-    //  La función divide el rango de horas de trabajo en dos partes:
-    //  antes de la hora de la reserva y después de la hora de la reserva.
-    //  Luego, agrega las dos partes al horario del psicólogo.
-    private void updateSchedule(Date reservationDate, String workingHoursRange, PsychologistSchedule schedule) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-        String[] times = workingHoursRange.split(" - ");
-        Date workingHoursStart = formatter.parse(times[0]);
-        Date workingHoursEnd = formatter.parse(times[1]);
+        Reservation reservation = new Reservation();
+        reservation.createReservation(reservationDate, reservationTime, patientId);
+        reservation.schedule = schedule;
 
-        schedule.getSchedule().remove(workingHoursRange);
+        // Add the reservation to the schedule
+        schedule.addReservation(reservation);
 
-        if (!reservationDate.equals(workingHoursStart)) {
-            String newWorkingHoursRange = formatter.format(workingHoursStart) + " - " + formatter.format(reservationDate);
-            schedule.getSchedule().add(newWorkingHoursRange);
-        }
-
-        if (!reservationDate.equals(workingHoursEnd)) {
-            String newWorkingHoursRange = formatter.format(reservationDate) + " - " + formatter.format(workingHoursEnd);
-            schedule.getSchedule().add(newWorkingHoursRange);
-        }
+        return reservation;
     }
-    public void checkReservationDate(Date reservationDate) {
-        Date currentDate = new Date();
-        if (reservationDate.before(currentDate)) {
-            throw new IllegalArgumentException("Reservation date cannot be in the past.");
-        }
-    }
+
 }
