@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 
 
-@Table(name = "psychologist_schedules")
 @Getter
 @Entity
 public class PsychologistSchedule extends AuditableModel {
@@ -24,12 +23,19 @@ public class PsychologistSchedule extends AuditableModel {
     private int worked_hours;
 
     private int started_hour;
+
+    //summary
+    //se utiliza para denotar una colección de elementos básicos (propio de JPA)
+    //que son instancias de un tipo de valor básico o embeddable.
     @ElementCollection
     private List<String> schedule = new ArrayList<>();
 
-
     private Long psychologistId;
 
+    //summary
+    //La relación entre PsychologistSchedule y Reservation es de uno a muchos.
+    //PsychologistSchedule puede tener muchas Reservation y
+    //una Reservation está asociada a un PsychologistSchedule
     @OneToMany(mappedBy = "schedule")
     private List<Reservation> reservations;
 
