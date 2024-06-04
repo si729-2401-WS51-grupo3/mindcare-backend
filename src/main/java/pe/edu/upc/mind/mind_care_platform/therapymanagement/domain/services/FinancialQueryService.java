@@ -13,8 +13,6 @@ public interface FinancialQueryService {
 
     Optional<Financial> handle(GetFinancialTransactionByIdQuery query);
     List<Financial> handle(GetAllFinancialTransactionQuery query);
-
     List<Financial> handle(GetAllFinancialTransactionByPatientIdQuery query);
-
     List<Financial> handle(GetAllFinancialTransactionByPsychologistIdQuery query);
 }

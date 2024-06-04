@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.queries.GetAllFinancialTransactionByPatientIdQuery;
 import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.queries.GetAllFinancialTransactionQuery;
 import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.queries.GetFinancialTransactionByIdQuery;
 import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.services.FinancialCommandService;
@@ -61,6 +62,15 @@ public class FinancialsController {
             return ResponseEntity.badRequest().build();
         var financialResource = FinancialResourceFromEntityAssembler.toResourceFromEntity(financial.get());
         return ResponseEntity.ok(financialResource);
+    }
+    @GetMapping("/patient/{patientId}")
+    public ResponseEntity<List<FinancialResource>> getFinancialsByPatientId(@PathVariable String patientId) {
+        var getAllFinancialsByPatientIdQuery = new GetAllFinancialTransactionByPatientIdQuery(patientId);
+        var financials = financialQueryService.handle(getAllFinancialsByPatientIdQuery);
+        var financialResources = financials.stream()
+                .map(FinancialResourceFromEntityAssembler::toResourceFromEntity)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(financialResources);
     }
 
     @GetMapping
