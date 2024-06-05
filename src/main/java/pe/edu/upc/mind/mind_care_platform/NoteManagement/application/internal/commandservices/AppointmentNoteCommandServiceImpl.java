@@ -18,7 +18,7 @@ public class AppointmentNoteCommandServiceImpl implements AppointmentNoteCommand
 
     @Override
     public AppointmentNote handle(CreateAppointmentNoteCommand command) {
-        var appointmentNote = new AppointmentNote(command.psychologistId(), command.patientId(), command.appointment(), command.note());
+        var appointmentNote = new AppointmentNote(command.psychologistId(), command.patientId(), command.appointmentId(), command.note());
         appointmentNoteRepository.save(appointmentNote);
         return appointmentNote;
     }
@@ -52,6 +52,6 @@ public class AppointmentNoteCommandServiceImpl implements AppointmentNoteCommand
 
     @Override
     public void handle(DeleteAppointmentNoteCommand command) {
-        appointmentNoteRepository.deleteById(command.getAppointmentNoteId());
+        appointmentNoteRepository.deleteById(command.appointmentNoteId());
     }
 }

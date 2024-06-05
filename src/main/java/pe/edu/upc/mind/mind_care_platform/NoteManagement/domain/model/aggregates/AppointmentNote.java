@@ -1,7 +1,7 @@
 package pe.edu.upc.mind.mind_care_platform.NoteManagement.domain.model.aggregates;
 
-import pe.edu.upc.mind.mind_care_platform.NoteManagement.domain.model.entities.Appointment;
 import pe.edu.upc.mind.mind_care_platform.NoteManagement.domain.model.entities.Note;
+import pe.edu.upc.mind.mind_care_platform.NoteManagement.domain.model.valueobjects.AppointmentId;
 import pe.edu.upc.mind.mind_care_platform.NoteManagement.domain.model.valueobjects.PsychologistId;
 import pe.edu.upc.mind.mind_care_platform.NoteManagement.domain.model.valueobjects.PatientId;
 import jakarta.persistence.*;
@@ -27,12 +27,11 @@ public class AppointmentNote extends AbstractAggregateRoot<AppointmentNote> {
     @Embedded
     private PatientId patientId;
 
-    @OneToOne
-    @JoinColumn(name = "appointment_id", referencedColumnName = "id")
-    private Appointment appointment;
+    @Embedded
+    @Column(insertable = false, updatable = false)
+    private AppointmentId appointmentId;
 
-    @OneToOne
-    @JoinColumn(name = "note_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "appointmentNote", cascade = CascadeType.ALL)
     private Note note;
 
     @CreatedDate
@@ -45,10 +44,10 @@ public class AppointmentNote extends AbstractAggregateRoot<AppointmentNote> {
 
     public AppointmentNote() {}
 
-    public AppointmentNote(PsychologistId psychologistId, PatientId patientId, Appointment appointment, Note note) {
+    public AppointmentNote(PsychologistId psychologistId, PatientId patientId, AppointmentId appointmentId, Note note) {
         this.psychologistId = psychologistId;
         this.patientId = patientId;
-        this.appointment = appointment;
+        this.appointmentId = appointmentId;
         this.note = note;
     }
 

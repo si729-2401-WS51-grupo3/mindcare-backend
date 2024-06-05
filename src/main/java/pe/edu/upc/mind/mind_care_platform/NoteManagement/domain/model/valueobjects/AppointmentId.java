@@ -3,16 +3,15 @@ package pe.edu.upc.mind.mind_care_platform.NoteManagement.domain.model.valueobje
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
-
 @Embeddable
-public record PatientId(@Column(name = "patient_id")Long id) {
-    public PatientId {
+public record AppointmentId(@Column(name = "appointment_id")Long id) {
+    public AppointmentId {
         if (id < 0) {
-            throw new IllegalArgumentException("Patient ID cannot be negative");
+            throw new IllegalArgumentException("Appointment ID cannot be negative");
         }
     }
 
-    public PatientId() {
+    public AppointmentId() {
         this(0L);
     }
 }

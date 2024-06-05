@@ -15,7 +15,8 @@ public class Note {
     @Setter
     private String content;
 
-    @OneToOne(mappedBy = "note", cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "appointmentnote_id")
     private AppointmentNote appointmentNote;
 
     public Note() {

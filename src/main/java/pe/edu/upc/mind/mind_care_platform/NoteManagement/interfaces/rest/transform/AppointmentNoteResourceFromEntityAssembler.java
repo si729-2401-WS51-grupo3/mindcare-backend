@@ -9,7 +9,7 @@ public class AppointmentNoteResourceFromEntityAssembler {
         return new AppointmentNoteResource(
                 entity.getId(),
                 entity.getNote().getContent(),
-                entity.getAppointment().getId(),
+                entity.getAppointmentId().id(),
                 entity.getPsychologistId().id(),
                 entity.getPatientId().id()
         );
