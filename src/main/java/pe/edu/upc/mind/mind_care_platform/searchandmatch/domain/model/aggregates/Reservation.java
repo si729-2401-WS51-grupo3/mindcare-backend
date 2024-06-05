@@ -68,7 +68,7 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
     public String getReservationTime() {
         return this.reservationTime;
     }
-    public String getReservationDate() {
+    public String getReservationDateStr() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         return formatter.format(this.reservationDate);
     }
