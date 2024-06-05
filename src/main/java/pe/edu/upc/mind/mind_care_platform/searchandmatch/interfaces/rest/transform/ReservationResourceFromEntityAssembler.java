@@ -4,7 +4,7 @@ import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.aggregates
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.interfaces.rest.resources.ReservationResource;
 
 public class ReservationResourceFromEntityAssembler {
-    public static ReservationResource fromEntity(Reservation entity) {
-        return new ReservationResource(entity.getId(), entity.getReservationDateStr(), entity.getReservationTime(), entity.getPatientId());
+    public static ReservationResource toResourceFromEntity(Reservation entity) {
+        return new ReservationResource(entity.getId(), entity.getReservationDate(), entity.getReservationTime(), entity.getPatientId());
     }
 }

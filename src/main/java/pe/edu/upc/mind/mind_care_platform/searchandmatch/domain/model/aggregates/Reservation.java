@@ -33,13 +33,13 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
     private PsychologistSchedule schedule;
 
     @Setter
-    private Date reservationDate;
+    private String reservationDate;
     private String reservationTime;
     private PatientId patientId;
     public Reservation() {
     }
 
-    public Reservation(Date reservationDate, String reservationTime, PatientId patientId) {
+    public Reservation(String reservationDate, String reservationTime, PatientId patientId) {
         this.reservationDate = reservationDate;
         this.reservationTime = reservationTime;
         this.patientId = patientId;
@@ -54,7 +54,7 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
         this.patientId = patientId;
     }
 
-    public static Reservation createFromSchedule(PsychologistSchedule schedule, Date reservationDate, String reservationTime, PatientId patientId ) throws ParseException {
+    public static Reservation createFromSchedule(PsychologistSchedule schedule, String reservationDate, String reservationTime, PatientId patientId ) throws ParseException {
         Reservation reservation = new Reservation(reservationDate, reservationTime, patientId);
         reservation.schedule = schedule;
         // Add the reservation to the schedule
@@ -68,9 +68,8 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
     public String getReservationTime() {
         return this.reservationTime;
     }
-    public String getReservationDateStr() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        return formatter.format(this.reservationDate);
+    public String getReservationDate() {
+        return this.reservationDate;
     }
     public Long getPatientId() {
         return this.patientId.patientId();

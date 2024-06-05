@@ -4,5 +4,5 @@ import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.valueobjec
 
 import java.util.Date;
 
-public record CreateReservationCommand(Date reservationDate, String reservationTime, PatientId patientId) {
+public record CreateReservationCommand(Long id, String reservationDate, String reservationTime, PatientId patientId) {
 }

@@ -6,9 +6,11 @@ import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.aggregates
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+    Optional<Reservation> findById(Long id);
     List<Reservation> findByPatientId(Long patientId);
-    List<Reservation> findByPatientIdAndReservationDate(Long patientId, Date reservationDate);
+    List<Reservation> findByPatientIdAndReservationDate(Long patientId, String reservationDate);
 }

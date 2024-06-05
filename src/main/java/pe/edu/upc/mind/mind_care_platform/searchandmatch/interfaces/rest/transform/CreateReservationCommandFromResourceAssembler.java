@@ -10,9 +10,6 @@ import java.util.Date;
 
 public class CreateReservationCommandFromResourceAssembler {
     public static CreateReservationCommand toCommandFromResource(CreateReservationResource resource) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date reservationDate = null;
-        reservationDate = formatter.parse(resource.reservationDate());
-        return new CreateReservationCommand(reservationDate, resource.reservationTime(), new PatientId(resource.patientId()));
+        return new CreateReservationCommand(resource.id(),resource.reservationDate(), resource.reservationTime(), new PatientId(resource.patientId()));
     }
 }
