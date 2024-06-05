@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.queries.GetAllReservationsQuery;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.queries.GetReservationByIdQuery;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.queries.GetReservationsByPatientIdAndReservationDate;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.queries.GetReservationsByPatientIdQuery;
@@ -34,24 +35,19 @@ public class ReservationsController {
 
     @PostMapping
     public ResponseEntity<ReservationResource> createReservation(@RequestBody CreateReservationResource resource) {
-        try {
-            var createReservationCommand = CreateReservationCommandFromResourceAssembler.toCommandFromResource(resource);
-            var reservationId = reservationCommandService.handle(createReservationCommand);
+        var createReservationCommand = CreateReservationCommandFromResourceAssembler.toCommandFromResource(resource);
+        var reservationId = reservationCommandService.handle(createReservationCommand);
 
-            if (reservationId == 0L) {
-                return ResponseEntity.badRequest().build();
-            }
-            var getReservationByIdQuery = new GetReservationByIdQuery(reservationId);
-            var reservation = reservationQueryService.handle(getReservationByIdQuery);
-
-            if (reservation.isEmpty())
-                return ResponseEntity.badRequest().build();
-            var reservationResource = ReservationResourceFromEntityAssembler.toResourceFromEntity(reservation.get());
-            return new ResponseEntity<>(reservationResource, HttpStatus.CREATED);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if (reservationId == 0L) {
             return ResponseEntity.badRequest().build();
         }
+        var getReservationByIdQuery = new GetReservationByIdQuery(reservationId);
+        var reservation = reservationQueryService.handle(getReservationByIdQuery);
+
+        if (reservation.isEmpty())
+            return ResponseEntity.badRequest().build();
+        var reservationResource = ReservationResourceFromEntityAssembler.toResourceFromEntity(reservation.get());
+        return new ResponseEntity<>(reservationResource, HttpStatus.CREATED);
     }
 
     @GetMapping("/{reservationId}")
@@ -63,6 +59,15 @@ public class ReservationsController {
             return ResponseEntity.badRequest().build();
         var reservationResource = ReservationResourceFromEntityAssembler.toResourceFromEntity(reservation.get());
         return ResponseEntity.ok(reservationResource);
+    }
+    @GetMapping
+    public ResponseEntity<List<ReservationResource>> getAllReservations() {
+        var getAllReservationsQuery = new GetAllReservationsQuery();
+        var reservations = reservationQueryService.handle(getAllReservationsQuery);
+        var reservationResources = reservations.stream()
+                .map(ReservationResourceFromEntityAssembler::toResourceFromEntity)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(reservationResources);
     }
 
     @GetMapping("/patient/{patientId}")

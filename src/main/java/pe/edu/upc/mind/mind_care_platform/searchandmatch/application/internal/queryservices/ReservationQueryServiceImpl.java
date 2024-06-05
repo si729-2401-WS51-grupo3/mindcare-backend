@@ -2,6 +2,7 @@ package pe.edu.upc.mind.mind_care_platform.searchandmatch.application.internal.q
 
 import org.springframework.stereotype.Service;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.aggregates.Reservation;
+import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.queries.GetAllReservationsQuery;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.queries.GetReservationByIdQuery;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.queries.GetReservationsByPatientIdAndReservationDate;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.queries.GetReservationsByPatientIdQuery;
@@ -37,5 +38,9 @@ public class ReservationQueryServiceImpl implements ReservationQueryService {
         } catch (ParseException e) {
             throw new IllegalArgumentException("Invalid date format. Expected format is dd-MM-yyyy.");
         }
+    }
+    @Override
+    public List<Reservation> handle(GetAllReservationsQuery query) {
+        return reservationRepository.findAll();
     }
 }

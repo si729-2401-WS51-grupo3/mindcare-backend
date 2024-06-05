@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CreateReservationCommandFromResourceAssembler {
-    public static CreateReservationCommand toCommandFromResource(CreateReservationResource resource) throws ParseException {
+    public static CreateReservationCommand toCommandFromResource(CreateReservationResource resource){
         return new CreateReservationCommand(resource.id(),resource.reservationDate(), resource.reservationTime(), new PatientId(resource.patientId()));
     }
 }
