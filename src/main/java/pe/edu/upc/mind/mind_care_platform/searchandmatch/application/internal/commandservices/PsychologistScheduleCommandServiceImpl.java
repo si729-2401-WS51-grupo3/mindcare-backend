@@ -19,6 +19,7 @@ public class PsychologistScheduleCommandServiceImpl implements PsychologistSched
     @Override
     public Long handle(CreatePsychologistScheduleCommand command) {
         var psychologistSchedule = new PsychologistSchedule(
+                command.psychologistId(),
                 command.worked_hours(),
                 command.started_hour()
         ){
@@ -32,7 +33,7 @@ public class PsychologistScheduleCommandServiceImpl implements PsychologistSched
     }
     @Override
     public Optional<PsychologistSchedule> handle(UpdatePsychologistScheduleCommand command) {
-        Optional<PsychologistSchedule> psychologistSchedule = psychologistScheduleRepository.findById(command.id());
+        Optional<PsychologistSchedule> psychologistSchedule = psychologistScheduleRepository.findById(command.psychologistId().psychologistId());
         if (psychologistSchedule.isPresent()) {
             PsychologistSchedule schedule = psychologistSchedule.get();
             schedule.setWorked_hours(command.worked_hours());

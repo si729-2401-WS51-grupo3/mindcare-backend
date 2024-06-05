@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.aggregates.Reservation;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.commands.CreatePsychologistScheduleCommand;
+import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.valueobjects.PatientId;
+import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.valueobjects.PsychologistId;
 import pe.edu.upc.mind.mind_care_platform.shared.domain.model.entity.AuditableModel;
 
 import java.text.SimpleDateFormat;
@@ -20,7 +22,7 @@ public class PsychologistSchedule extends AuditableModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long psychologistId;
+    private PsychologistId psychologistId;
     @Setter
     private int worked_hours;
     @Setter
@@ -34,8 +36,16 @@ public class PsychologistSchedule extends AuditableModel {
 
     public PsychologistSchedule() {
     }
-
-    public PsychologistSchedule(int worked_hours, int started_hour) {
+    public PsychologistSchedule(Long psychologistId) {
+        this();
+        this.psychologistId = new PsychologistId(psychologistId);
+    }
+    public PsychologistSchedule(PsychologistId psychologistId) {
+        this();
+        this.psychologistId = psychologistId;
+    }
+    public PsychologistSchedule(PsychologistId psychologistId, int worked_hours, int started_hour) {
+        this.psychologistId = psychologistId;
         this.worked_hours = worked_hours;
         this.started_hour = started_hour;
         createSchedule();
