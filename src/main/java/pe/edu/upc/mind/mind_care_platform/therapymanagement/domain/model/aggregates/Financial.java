@@ -1,5 +1,6 @@
 package pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.aggregates;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class Financial extends AbstractAggregateRoot<Financial> {
 
     @Getter
     @OneToMany(mappedBy = "financial", cascade = CascadeType.ALL,orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Transaction> transactions= new ArrayList<>(); ;
 
 

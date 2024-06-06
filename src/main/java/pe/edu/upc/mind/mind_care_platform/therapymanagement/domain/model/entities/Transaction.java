@@ -1,5 +1,6 @@
 package pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,6 +34,7 @@ public class Transaction {
     @Setter
     @ManyToOne
     @JoinColumn(name = "financial_id")
+    @JsonBackReference
     private Financial financial; //ESTE ES MI AGGREGATE CONECTADO AL ENTITIE!!
 
     /**

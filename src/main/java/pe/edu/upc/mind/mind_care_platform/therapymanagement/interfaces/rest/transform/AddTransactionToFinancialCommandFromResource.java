@@ -6,12 +6,16 @@ import pe.edu.upc.mind.mind_care_platform.therapymanagement.interfaces.rest.reso
 
 @Component
 public class AddTransactionToFinancialCommandFromResource {
-    public AddTransactionToFinancialCommand toCommand(AddTransactionToFinancialResource resource) {
+    public AddTransactionToFinancialCommand toCommandFromResource(AddTransactionToFinancialResource resource) {
+        if (resource.pyschologistId() == null) {
+            throw new IllegalArgumentException("PyschologistId cannot be null");
+        }
+
         return new AddTransactionToFinancialCommand(
-            resource.getPatientId(),
-            resource.getPyschologistId(),
-            resource.getReservationId(),
-            resource.getAmount()
+                resource.patientId(),
+                resource.pyschologistId(),
+                resource.reservationId(),
+                resource.amount()
         );
     }
 }

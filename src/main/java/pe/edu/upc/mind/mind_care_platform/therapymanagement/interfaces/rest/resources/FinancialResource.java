@@ -2,10 +2,5 @@ package pe.edu.upc.mind.mind_care_platform.therapymanagement.interfaces.rest.res
 
 import java.util.List;
 
-public class FinancialResource {
-    private Long id;
-    private Long patientId;
-    private List<TransactionResource> transactions;
-
-    // getters and setters
+public record FinancialResource(Long id, Long patientId, List<TransactionResource> transactions) {
 }
