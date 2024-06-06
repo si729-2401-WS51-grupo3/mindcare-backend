@@ -16,7 +16,4 @@ public record PyschologistId(Long pyschologistId) {
         return pyschologistId;
     }
 
-    public Long getId() {
-        return pyschologistId;
-    }
 }

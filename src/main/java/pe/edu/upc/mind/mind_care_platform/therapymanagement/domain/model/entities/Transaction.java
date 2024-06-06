@@ -1,6 +1,7 @@
 package pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +29,7 @@ public class Transaction {
     @Setter
     @Getter
     @Embedded
+    @JsonUnwrapped
     private PatientId patientId; //se buscara solo por patient_id
 
     @Getter
@@ -44,11 +46,13 @@ public class Transaction {
     @Setter
     @Getter
     @Embedded
+    @JsonUnwrapped
     private PyschologistId pyschologistId;
 
     @Setter
     @Getter
     @Embedded
+    @JsonUnwrapped
     private ReservationId reservationId;
 
     private int amount;

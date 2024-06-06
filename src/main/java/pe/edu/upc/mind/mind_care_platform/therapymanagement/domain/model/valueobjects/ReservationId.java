@@ -16,7 +16,4 @@ public record ReservationId(Long reservationId) {
         return reservationId;
     }
 
-    public Long getId() {
-        return reservationId;
-    }
 }

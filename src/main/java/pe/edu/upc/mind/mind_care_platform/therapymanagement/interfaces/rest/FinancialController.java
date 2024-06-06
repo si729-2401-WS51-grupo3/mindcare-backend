@@ -52,6 +52,7 @@ public class FinancialController {
 
     /**
      *  Recupera información sobre transacciones vinculadas gracias al financial_id
+     *  POSTMAN: http://localhost:8091/financial/getFinancial/1
      */
     @GetMapping("/getFinancial/{financialId}")
     public ResponseEntity<Financial> getFinancial(@PathVariable Long financialId) {
@@ -62,6 +63,7 @@ public class FinancialController {
 
     /**
      *  Recupera la informacion del id de una finanza gracias al id de un paciente
+     *  POSTMAN: http://localhost:8091/financial/getFinancialByPatientId/4
      */
     @GetMapping("/getFinancialByPatientId/{patientId}")
     public ResponseEntity<List<Map<String, Object>>> getFinancialByPatientId(@PathVariable Long patientId) {
@@ -75,6 +77,7 @@ public class FinancialController {
 
     /**
      *  Recupera la informacion de las transacciones gracias al id de un paciente
+     *  POSTMAN: http://localhost:8091/financial/getAllTransactionsByPatientId/1
      */
     @GetMapping("/getAllTransactionsByPatientId/{patientId}")
     public ResponseEntity<List<Transaction>> getAllTransactionsByPatientId(@PathVariable Long patientId) {
@@ -88,6 +91,7 @@ public class FinancialController {
 
     /**
      *  Recupera la informacion de las transacciones gracias al id de una finanza
+     *  POSTMAN: http://localhost:8091/financial/getAllTransactionsByFinancialId/1
      */
     @GetMapping("/getAllTransactionsByFinancialId/{financialId}")
     public ResponseEntity<List<Transaction>> getAllTransactionsByFinancialId(@PathVariable Long financialId) {

@@ -20,7 +20,4 @@ public record PatientId(Long patientId) {
         return patientId;
     }
 
-    public Long getId() {
-        return patientId;
-    }
 }
