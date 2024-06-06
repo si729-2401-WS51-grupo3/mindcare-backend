@@ -1,87 +1,66 @@
 package pe.edu.upc.mind.mind_care_platform.therapymanagement.application.internal.commandservices;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.aggregates.Financial;
-import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.commands.CancelFinancialTransactionCommand;
-import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.commands.CreateFinancialTransactionCommand;
-import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.commands.PayFinancialTransactionCommand;
-import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.commands.UpdatedFinancialTransactionCommand;
+import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.commands.AddTransactionToFinancialCommand;
+import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.commands.CancelTransactionCommand;
 import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.entities.Transaction;
+import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.valueobjects.PatientId;
+import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.valueobjects.PyschologistId;
+import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.valueobjects.ReservationId;
 import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.services.FinancialCommandService;
 import pe.edu.upc.mind.mind_care_platform.therapymanagement.infraestructure.persistence.jpa.repositories.FinancialRepository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
-public class FinancialCommandServiceImpl implements FinancialCommandService{
+public class FinancialCommandServiceImpl implements FinancialCommandService {
     private final FinancialRepository financialRepository;
+
     public FinancialCommandServiceImpl(FinancialRepository financialRepository) {
         this.financialRepository = financialRepository;
     }
 
+    /**
+     * Este metodo se encarga de agregar una transaccion a la lista de finanzas de un paciente
+     */
+
     @Override
-    public Long handle(CreateFinancialTransactionCommand command) {
-        Financial financial = new Financial(command);
+    public void handle(AddTransactionToFinancialCommand command) {
+        Long patientId = command.patientId();
+        Financial financial;
+        List<Financial> financials = financialRepository.findByPatientId(patientId);
+        if (financials.isEmpty()) {
+            financial = new Financial();
+            financial.setPatientId(patientId);
+        } else {
+            financial = financials.get(0); // Tomamos el primer Financial si hay más de uno
+        }
+        PatientId patientIdInstance = new PatientId(patientId);
+        PyschologistId pyschologistIdInstance = new PyschologistId(command.pyschologistId());
+        ReservationId reservationIdInstance = new ReservationId(command.reservationId());
+        int amount = command.getAmount();
+        Transaction newTransaction = new Transaction(patientIdInstance, financial, pyschologistIdInstance, reservationIdInstance, amount);
+        financial.addTransaction(newTransaction);
         financialRepository.save(financial);
-        return financial.getId();
     }
 
-    /**
-     * Command handler to update the amount of a specific transaction within a financial transaction.
-     *
-     * @param command containing the transactionId of the financial transaction and the new amount to be updated.
-     *
-     * @return Optional<Financial> - The updated Financial object if the transactionId is found, otherwise an exception is thrown.
-     *
-     * The method works as follows:
-     * 1. It tries to find the Financial object with the provided transactionId from the command.
-     * 2. If the Financial object is found, it then tries to find the specific Transaction within the Financial object's transactions list using the same transactionId.
-     * 3. If the Transaction is found, it updates the amount of the Transaction with the amount provided in the command.
-     * 4. The updated Financial object is then saved back to the repository.
-     * 5. Finally, the updated Financial object is returned.
-     *
-     * If at any point the Financial object or the Transaction is not found, a RuntimeException is thrown.
-     */
     @Override
-    public Optional<Financial> handle(UpdatedFinancialTransactionCommand command) {
-        return financialRepository.findById(command.transactionId()).map(financial -> {
-            Transaction transaction = financial.getTransactions().stream()
-                    .filter(t -> t.getId().equals(command.transactionId()))
-                    .findFirst()
-                    .orElseThrow(() -> new RuntimeException("Transaction not found"));
-
-            transaction.updateAmount(command.amount());
-            financialRepository.save(financial);
-            return financial;
-        });
-    }
-    /**
-     * Command handler to pay the financial transaction
-     * @param command containing transactionId
-     * @return transactionId
-     */
-    @Override
-    public Long handle(PayFinancialTransactionCommand command) {
-        financialRepository.findById(command.transactionId()).map(financial -> {
-            financial.pay();
-            financialRepository.save(financial);
-            return command.transactionId();
-        }).orElseThrow(() -> new RuntimeException("Financial transaction not found"));
-        return null;
+    @Transactional
+    public void handle(CancelTransactionCommand command) {
+        Long patientId = command.patientId();
+        List<Financial> financials = financialRepository.findByPatientId(patientId);
+        if (financials.isEmpty()) {
+            throw new IllegalArgumentException("Financial not found");
+        }
+        Financial financial = financials.getFirst(); // Tomamos el primer Financial si hay más de uno
+        Transaction transactionToRemove = financial.getTransactions().stream()
+                .filter(transaction -> transaction.getId().equals(command.transactionId()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Transaction not found"));
+        financial.removeTransaction(transactionToRemove);
+        financialRepository.save(financial);
     }
 
-    /**
-     * Command handler to cancel the financial transaction
-     * @param command containing transactionId
-     * @return transactionId
-     */
-    @Override
-    public Long handle(CancelFinancialTransactionCommand command) {
-        financialRepository.findById(command.transactionId()).map(financial -> {
-            financial.cancel();
-            financialRepository.save(financial);
-            return command.transactionId();
-        }).orElseThrow(() -> new RuntimeException("Financial transaction not found"));
-        return null;
-    }
 }

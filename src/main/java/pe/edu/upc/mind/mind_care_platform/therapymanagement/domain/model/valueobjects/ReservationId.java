@@ -1,18 +1,22 @@
 package pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.valueobjects;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Embeddable;
 
 /**
  * Value object representing the reservation id.
  */
 @Embeddable
-public record ReservationId(String reservationId) {
+public record ReservationId(Long reservationId) {
     public ReservationId {
         if (reservationId == null) {
             throw new IllegalArgumentException("ReservationId cannot be null");
         }
     }
-    public String getReservationId(){
-        return this.reservationId;
+    public Long value(){
+        return reservationId;
+    }
+
+    public Long getId() {
+        return reservationId;
     }
 }

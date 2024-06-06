@@ -1,14 +1,11 @@
 package pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.valueobjects;
 
 import jakarta.persistence.Embeddable;
-
-import java.util.UUID;
-
 /**
  * Value object representing the patient id.
  */
 @Embeddable
-public record PatientId(String patientId) {
+public record PatientId(Long patientId) {
     public PatientId {
         if (patientId == null) {
             throw new IllegalArgumentException("PatientId cannot be null");
@@ -19,7 +16,11 @@ public record PatientId(String patientId) {
      *  desde fuera de la clase PatientId, pero no te permite cambiar ese valor
      *  una vez que el objeto PatientId ha sido creado.
      */
-    public String getId() {
-        return this.patientId;
+    public Long value() {
+        return patientId;
+    }
+
+    public Long getId() {
+        return patientId;
     }
 }
