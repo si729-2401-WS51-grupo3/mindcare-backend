@@ -14,7 +14,6 @@ import java.util.Optional;
 public interface FinancialQueryService {
     Optional<Financial> handle(GetPatientFinancialQuery query);
     List<Map<String, Object>> handle(GetFinancialIdByPatientIdQuery query);
-    List<Map<String, Object>> handle(GetAllTransactionsByPatientIdQuery query);
-
+    List<Transaction> handle(GetAllTransactionsByPatientIdQuery query);
     List<Transaction> handle(GetAllTransactionsByFinancialId query);
 }
