@@ -2,8 +2,6 @@ package pe.edu.upc.mind.mind_care_platform.searchandmatch.application.internal.c
 
 import org.springframework.stereotype.Service;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.aggregates.Reservation;
-import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.commands.CreateReservationCommand;
-import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.services.ReservationCommandService;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.infrastructure.persistence.jpa.repositories.ReservationRepository;
 
 import java.text.ParseException;
@@ -26,8 +24,7 @@ public class ReservationCommandServiceImpl implements ReservationCommandService 
                     command.reservationDate(),
                     command.reservationTime(),
                     command.patientId()
-            ){
-            };
+            );
             try {
                 reservationRepository.save(reservation);
             } catch (Exception e) {

@@ -2,12 +2,10 @@ package pe.edu.upc.mind.mind_care_platform.searchandmatch.infrastructure.persist
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.aggregates.Reservation;
-
-import java.util.List;
+import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.entities.Psychologist;
 import java.util.Optional;
 
 @Repository
-public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+public interface PsychologistRepository extends JpaRepository<Psychologist, Long> {
 
 }

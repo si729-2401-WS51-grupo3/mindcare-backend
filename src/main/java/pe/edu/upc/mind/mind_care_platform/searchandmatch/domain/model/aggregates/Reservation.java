@@ -7,11 +7,10 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.entities.PsychologistSchedule;
+import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.entities.Psychologist;
+import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.entities.Schedule;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.valueobjects.PatientId;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Getter
@@ -29,18 +28,24 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
     private Date updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "schedule_id")
-    private PsychologistSchedule schedule;
+    @JoinColumn(name = "psychologist_id")
+    private Psychologist psychologist;
 
-    @Setter
-    private String reservationDate;
-    private String reservationTime;
     private PatientId patientId;
+
+    @Getter
+    @Setter
+    private String reservationDay;
+
+    @Getter
+    private int reservationTime;
+
+
     public Reservation() {
     }
 
-    public Reservation(String reservationDate, String reservationTime, PatientId patientId) {
-        this.reservationDate = reservationDate;
+    public Reservation(Psychologist psychologist, PatientId patientId, String reservationDay, int reservationTime) {
+        this.reservationDay = reservationDay;
         this.reservationTime = reservationTime;
         this.patientId = patientId;
     }
@@ -54,25 +59,8 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
         this.patientId = patientId;
     }
 
-    public static Reservation createFromSchedule(PsychologistSchedule schedule, String reservationDate, String reservationTime, PatientId patientId ) throws ParseException {
-        Reservation reservation = new Reservation(reservationDate, reservationTime, patientId);
-        reservation.schedule = schedule;
-        // Add the reservation to the schedule
-        schedule.addReservation(reservation);
-        return reservation;
-    }
-
     public Long getReservationId() {
         return this.id;
-    }
-    public String getReservationTime() {
-        return this.reservationTime;
-    }
-    public String getReservationDate() {
-        return this.reservationDate;
-    }
-    public Long getPatientId() {
-        return this.patientId.patientId();
     }
 
 }
