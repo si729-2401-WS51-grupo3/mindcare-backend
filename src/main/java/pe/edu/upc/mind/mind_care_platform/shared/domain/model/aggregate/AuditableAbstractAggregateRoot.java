@@ -1,19 +1,23 @@
-package pe.edu.upc.mind.mind_care_platform.shared.domain.model.entity;
+package pe.edu.upc.mind.mind_care_platform.shared.domain.model.aggregate;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.MappedSuperclass;
-import lombok.Data;
+import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
-public class AuditableModel {
+public class AuditableAbstractAggregateRoot<T extends AbstractAggregateRoot<T>> extends AbstractAggregateRoot<T> {
+
+    @Id
+    @Getter
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Getter
     @CreatedDate
@@ -24,11 +28,4 @@ public class AuditableModel {
     @LastModifiedDate
     @Column(nullable = false)
     private LocalDateTime updatedAt;
-
-    public AuditableModel() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-    }
-
-
 }

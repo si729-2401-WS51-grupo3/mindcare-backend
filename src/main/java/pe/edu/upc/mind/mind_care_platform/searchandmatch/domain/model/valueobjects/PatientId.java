@@ -7,7 +7,7 @@ public record  PatientId (Long patientId){
 
     public PatientId {
         if (patientId < 0) {
-            throw new IllegalArgumentException("PsychologistId cannot be negative");
+            throw new IllegalArgumentException("PatientId cannot be negative");
         }
     }
 }

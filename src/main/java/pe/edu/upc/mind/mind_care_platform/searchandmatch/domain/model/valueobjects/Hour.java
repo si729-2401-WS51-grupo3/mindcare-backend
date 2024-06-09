@@ -1,5 +1,8 @@
 package pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.valueobjects;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class Hour {
     private int hour;
     private HourStatus status;
@@ -7,6 +10,10 @@ public class Hour {
     public Hour(int hour, HourStatus status) {
         this.hour = hour;
         this.status = status;
+    }
+
+    public Hour() {
+
     }
 
     // getters and setters

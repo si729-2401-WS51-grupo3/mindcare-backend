@@ -5,31 +5,34 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.entities.Psychologist;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.entities.Schedule;
 import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.valueobjects.PatientId;
+import pe.edu.upc.mind.mind_care_platform.searchandmatch.domain.model.valueobjects.PsychologistId;
+import pe.edu.upc.mind.mind_care_platform.shared.domain.model.aggregate.AuditableAbstractAggregateRoot;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Reservation extends AbstractAggregateRoot<Reservation> {
+public class Reservation extends AuditableAbstractAggregateRoot<Reservation> {
     @Id
     @NotNull
     private Long id;
 
     @CreatedDate
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
+
+    @Embedded
+    private PsychologistId psychologistId;
 
     @ManyToOne
-    @JoinColumn(name = "psychologist_id")
-    private Psychologist psychologist;
+    @JoinColumn(name = "schedule_id")
+    private Schedule schedule;
 
     private PatientId patientId;
 
@@ -44,7 +47,8 @@ public class Reservation extends AbstractAggregateRoot<Reservation> {
     public Reservation() {
     }
 
-    public Reservation(Psychologist psychologist, PatientId patientId, String reservationDay, int reservationTime) {
+    public Reservation(PsychologistId psychologistId, PatientId patientId, String reservationDay, int reservationTime) {
+        this.psychologistId = psychologistId;
         this.reservationDay = reservationDay;
         this.reservationTime = reservationTime;
         this.patientId = patientId;
