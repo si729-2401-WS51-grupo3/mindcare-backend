@@ -9,5 +9,4 @@ public class MindCarePlatformApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MindCarePlatformApplication.class, args);
 	}
-
 }
