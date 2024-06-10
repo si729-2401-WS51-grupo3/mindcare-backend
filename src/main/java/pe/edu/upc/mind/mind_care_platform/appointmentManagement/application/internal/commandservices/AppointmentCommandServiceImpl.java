@@ -3,8 +3,7 @@ package pe.edu.upc.mind.mind_care_platform.appointmentManagement.application.int
 import org.springframework.stereotype.Service;
 import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.aggregates.Appointment;
 import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.commands.CreateAppointmentCommand;
-import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.commands.UpdateAppointmentCommand;
-import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.commands.CancelAppointmentCommand;
+import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.commands.AddAppointmentDataToAppointmentCommand;
 import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.services.AppointmentCommandService;
 import pe.edu.upc.mind.mind_care_platform.appointmentManagement.infrastructure.persistence.jpa.repositories.AppointmentRepository;
 
@@ -12,7 +11,6 @@ import java.util.Optional;
 
 @Service
 public class AppointmentCommandServiceImpl implements AppointmentCommandService {
-
     private final AppointmentRepository appointmentRepository;
 
     public AppointmentCommandServiceImpl(AppointmentRepository appointmentRepository) {
@@ -21,26 +19,32 @@ public class AppointmentCommandServiceImpl implements AppointmentCommandService 
 
     @Override
     public Long handle(CreateAppointmentCommand command) {
-        var appointment = new Appointment(command.sessionName(), command.date(), command.time(), command.meetingType(), command.psychologistId(), command.patientId());
-        appointmentRepository.save(appointment);
+        if (appointmentRepository.existsBySessionName(command.sessionName())) {
+            throw new IllegalArgumentException("Appointment with same title already exists");
+        }
+        var appointment = new Appointment(command);
+        try {
+            appointmentRepository.save(appointment);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error while saving appointment: " + e.getMessage());
+        }
         return appointment.getId();
     }
 
     @Override
-    public Optional<Appointment> handle(UpdateAppointmentCommand command) {
-        if (!appointmentRepository.existsById(command.appointmentId()))
-            throw new IllegalArgumentException("Appointment does not exist");
-        var appointmentToUpdate = appointmentRepository.findById(command.appointmentId()).get();
-        appointmentToUpdate.updateAppointment(command.sessionName(), command.date(), command.time(), command.meetingType(), command.psychologistId(), command.patientId());
-        var updatedAppointment = appointmentRepository.save(appointmentToUpdate);
-        return Optional.of(updatedAppointment);
-    }
-
-    @Override
-    public void handle(CancelAppointmentCommand command) {
-        if (!appointmentRepository.existsById(command.appointmentId())) {
+    public void handle(AddAppointmentDataToAppointmentCommand command) {
+        if (!appointmentRepository.existsById(command.appointmentDataId())) {
             throw new IllegalArgumentException("Appointment does not exist");
         }
-        appointmentRepository.deleteById(command.appointmentId());
+        try {
+            appointmentRepository.findById(command.appointmentDataId()).map(appointment -> {
+                appointment.addAppointmentDataToAppointment(command.appointmentDataId());
+                appointmentRepository.save(appointment);
+                System.out.println("Appointment data added to appointment");
+                return appointment;
+            });
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error while adding appointment data to appointment: " + e.getMessage());
+        }
     }
 }

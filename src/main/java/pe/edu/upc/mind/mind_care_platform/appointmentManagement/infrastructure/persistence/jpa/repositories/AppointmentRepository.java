@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
-    Optional<Appointment> findByAppointmentData_SessionName(String sessionName);
-    boolean existsByAppointmentData_SessionName(String sessionName);
-    boolean existsByAppointmentData_SessionNameAndIdIsNot(String sessionName, Long id);
+    Optional<Appointment> findBySessionName(String sessionName);
+    boolean existsBySessionName(String sessionName);
+    boolean existsBySessionNameAndIdIsNot(String sessionName, Long id);
 }

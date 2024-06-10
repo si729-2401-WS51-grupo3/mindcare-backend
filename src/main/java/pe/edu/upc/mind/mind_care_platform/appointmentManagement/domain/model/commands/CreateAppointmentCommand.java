@@ -4,5 +4,5 @@ import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.val
 import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.valueobjects.PsychologistId;
 import java.time.LocalDateTime;
 
-public record CreateAppointmentCommand(String sessionName, LocalDateTime date, LocalDateTime time, MeetingType meetingType, PsychologistId psychologistId, PatientId patientId) {
+public record CreateAppointmentCommand(String sessionName) {
 }

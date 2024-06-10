@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Entity
-public class AppoinmentData extends AuditableModel {
+public class AppointmentData extends AuditableModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,33 +39,32 @@ public class AppoinmentData extends AuditableModel {
     @NotNull
     private MeetingType meetingType;
 
-    @Embedded
+    /*@Embedded
     @NotNull
     private PsychologistId psychologistId;
 
     @Embedded
     @NotNull
-    private PatientId patientId;
+    private PatientId patientId;*/
 
     @ManyToOne
     @JoinColumn(name = "next_item_id")
-    private AppoinmentData nextItem;
+    private AppointmentData nextItem;
 
-    public AppoinmentData(String sessionName, LocalDateTime date, LocalDateTime time, MeetingType meetingType, PsychologistId psychologistId, PatientId patientId, AppoinmentData nextItem) {
-        this.sessionName = sessionName;
-        this.date = date;
-        this.time = time;
-        this.meetingType = meetingType;
-        this.psychologistId = psychologistId;
-        this.patientId = patientId;
+    public AppointmentData(Appointment appointment, AppointmentData nextItem) {
+        this.appointment = appointment;
         this.nextItem = nextItem;
     }
 
-    public AppoinmentData(){
+    public AppointmentData(){
         this.nextItem = null;
     }
 
-    public void updateNextItem(AppoinmentData nextItem) {
+    public AppointmentData(Appointment appointment, Long nextItem) {
+        super();
+    }
+
+    public void updateNextItem(AppointmentData nextItem) {
         this.nextItem = nextItem;
     }
 }

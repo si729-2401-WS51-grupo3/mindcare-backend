@@ -2,61 +2,48 @@ package pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.ag
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.entities.AppoinmentData;
-import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.valueobjects.MeetingType;
+import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.commands.CreateAppointmentCommand;
+import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.valueobjects.AppointmentDataPath;
 import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.valueobjects.PatientId;
 import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.valueobjects.PsychologistId;
-import pe.edu.upc.mind.mind_care_platform.shared.domain.model.entities.AuditableModel;
-import java.time.LocalDateTime;
+import pe.edu.upc.mind.mind_care_platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 
 
 /**
  * Represents an appointment.
  * The appointment is an aggregate root.
  */
-@EntityListeners(AuditingEntityListener.class)
+@Getter
 @Entity
-public class Appointment extends AuditableModel {
-    @Id
-    @Getter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Appointment extends AuditableAbstractAggregateRoot<Appointment> {
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "appointment_data_id", referencedColumnName = "id")
-    private AppoinmentData appointmentData;
+    private String sessionName;
 
-    @CreatedDate
-    private LocalDateTime createdAt;
+    @Embedded
+    private final PsychologistId psychologistId;
 
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
+    @Embedded
+    private final PatientId patientId;
 
-    public Appointment(AppoinmentData appointmentData) {
-        this.appointmentData = appointmentData;
-    }
+    @Embedded
+    private final AppointmentDataPath appointmentDataPath;
 
     public Appointment() {
-        this.appointmentData = new AppoinmentData();
+        this.sessionName = "";
+        this.psychologistId = new PsychologistId();
+        this.patientId = new PatientId();
+        this.appointmentDataPath = new AppointmentDataPath();
     }
-
-    public Appointment(String s, LocalDateTime date, LocalDateTime time, MeetingType meetingType, PsychologistId psychologistId, PatientId patientId) {
-        this.appointmentData = new AppoinmentData(s, date, time, meetingType, psychologistId, patientId);
+    public Appointment(String sessionName) {
+        this();
+        this.sessionName = sessionName;
     }
-
-    /**
-     * Updates the appointment details.
-     * @param sessionName The session name.
-     * @param date The date of the appointment.
-     * @param time The time of the appointment.
-     * @param meetingType The type of the meeting.
-     * @param psychologistId The id of the psychologist.
-     * @param patientId The id of the patient.
-     */
-    public void updateAppointment(String sessionName, LocalDateTime date, LocalDateTime time, MeetingType meetingType, PsychologistId psychologistId, PatientId patientId) {
-        this.appointmentData.updateMeeting(sessionName, date, time, meetingType, psychologistId, patientId);
+    public Appointment(CreateAppointmentCommand command) {
+        this();
+        this.sessionName = command.sessionName();
+    }
+    public void addAppointmentDataToAppointment(Long appointmentDataId) {
+        System.out.println("Adding appointment data to appointment");
+        this.appointmentDataPath.addItem(this, appointmentDataId);
     }
 }
