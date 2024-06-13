@@ -1,49 +1,67 @@
 package pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.aggregates;
 
+import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.entities.AppointmentDetail;
+import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.valueobjects.MeetingType;
+import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.valueobjects.PsychologistId;
+
 import jakarta.persistence.*;
 import lombok.Getter;
-import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.commands.CreateAppointmentCommand;
-import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.valueobjects.AppointmentDataPath;
-import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.valueobjects.PatientId;
-import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.valueobjects.PsychologistId;
-import pe.edu.upc.mind.mind_care_platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.domain.AbstractAggregateRoot;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.security.SecureRandom;
 
-/**
- * Represents an appointment.
- * The appointment is an aggregate root.
- */
+import java.util.Date;
+import java.util.List;
+
 @Getter
 @Entity
-public class Appointment extends AuditableAbstractAggregateRoot<Appointment> {
+public class Appointment extends AbstractAggregateRoot<Appointment> {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private String sessionName;
-
-    @Embedded
-    private final PsychologistId psychologistId;
-
-    @Embedded
-    private final PatientId patientId;
+    private String title;
 
     @Embedded
-    private final AppointmentDataPath appointmentDataPath;
+    private PsychologistId psychologistId;
+
+    private MeetingType type;
+
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private Date createdAt;
+
+    @LastModifiedDate
+    @Column(nullable = false)
+    private Date updatedAt;
+
+    @OneToMany(mappedBy = "appointment", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<AppointmentDetail> appointmentDetails;
 
     public Appointment() {
-        this.sessionName = "";
+        this.title = "";
         this.psychologistId = new PsychologistId();
-        this.patientId = new PatientId();
-        this.appointmentDataPath = new AppointmentDataPath();
     }
-    public Appointment(String sessionName) {
-        this();
-        this.sessionName = sessionName;
+    public Appointment(String title, String type, PsychologistId psychologistId) {
+        this.id = new SecureRandom().nextLong();
+        this.title = title;
+        this.type = MeetingType.valueOf(type);
+        this.psychologistId = psychologistId;
     }
-    public Appointment(CreateAppointmentCommand command) {
-        this();
-        this.sessionName = command.sessionName();
+
+    public void updateTitle(String title) {
+        this.title = title;
     }
-    public void addAppointmentDataToAppointment(Long appointmentDataId) {
-        System.out.println("Adding appointment data to appointment");
-        this.appointmentDataPath.addItem(this, appointmentDataId);
+    public void updateType(String type) {
+        this.type = MeetingType.valueOf(type);
+    }
+    public void updatePsychologistId(PsychologistId psychologistId) {
+        this.psychologistId = psychologistId;
+    }
+public void addAppointmentDetail(AppointmentDetail appointmentDetail) {
+        appointmentDetails.add(appointmentDetail);
     }
 }

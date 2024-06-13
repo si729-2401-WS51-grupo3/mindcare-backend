@@ -4,8 +4,10 @@ import pe.edu.upc.mind.mind_care_platform.appointmentManagement.domain.model.agg
 import pe.edu.upc.mind.mind_care_platform.appointmentManagement.interfaces.rest.resources.AppointmentResource;
 
 public class AppointmentResourceFromEntityAssembler {
-
-    public static AppointmentResource toResourceFromEntity(Appointment appointment) {
-        return new AppointmentResource(appointment.getId(), appointment.getSessionName());
+    public static AppointmentResource toResourceFromEntity(Appointment entity) {
+        return new AppointmentResource(
+                entity.getTitle(),
+                entity.getPsychologistId().psychologistId()
+        );
     }
 }

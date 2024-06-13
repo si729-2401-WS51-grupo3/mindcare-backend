@@ -1,5 +1,4 @@
 package pe.edu.upc.mind.mind_care_platform.appointmentManagement.interfaces.rest.resources;
 
-public record AppointmentResource(Long id, String sessionName) {
-
+public record AppointmentResource(String title, Long psychologistId) {
 }
