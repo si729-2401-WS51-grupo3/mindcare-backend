@@ -6,6 +6,6 @@ import pe.edu.upc.mind.mind_care_platform.searchandmatch.interfaces.rest.resourc
 
 public class CreateScheduleCommandFromResourceAssembler {
     public static CreateScheduleCommand toCommandFromResource(CreateScheduleResource resource) {
-        return new CreateScheduleCommand(resource.worked_hours(),resource.started_hour(), resource.day(), new PsychologistId(resource.psychologistId()));
+        return new CreateScheduleCommand(new PsychologistId(resource.psychologistId()), resource.startedHour(), resource.finishedHour());
     }
 }
