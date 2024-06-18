@@ -8,11 +8,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="mindcare-backend" />
+        <module name="mind-care-platform" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="mind-care-platform" options="-parameters" />
       <module name="mindcare-backend" options="-parameters" />
     </option>
   </component>
