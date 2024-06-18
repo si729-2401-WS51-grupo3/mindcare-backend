@@ -39,8 +39,9 @@ public class FinancialController {
         if (resource.pyschologistId() == null) {
             return ResponseEntity.badRequest().body("PyschologistId cannot be null");
         }
-        financialCommandService.handle(addCommandFromResource.toCommandFromResource(resource));
-        return ResponseEntity.ok().build();
+        Financial updatedFinancial = financialCommandService.handle(addCommandFromResource.toCommandFromResource(resource));
+        Transaction createdTransaction = updatedFinancial.getTransactions().get(updatedFinancial.getTransactions().size() - 1);
+        return ResponseEntity.ok(createdTransaction);
     }
 
     @DeleteMapping("/cancelTransaction")

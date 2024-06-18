@@ -5,19 +5,17 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import pe.edu.upc.mind.mind_care_platform.shared.domain.model.entities.AuditableModel;
+import pe.edu.upc.mind.mind_care_platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.aggregates.Financial;
 import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.valueobjects.PatientId;
 import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.valueobjects.PyschologistId;
 import pe.edu.upc.mind.mind_care_platform.therapymanagement.domain.model.valueobjects.ReservationId;
 
-import java.util.Map;
-
 @Setter
 @Getter
 @Entity
 @Table(name = "transaction")
-public class Transaction {
+public class Transaction extends AuditableAbstractAggregateRoot<Transaction> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; //id de la transaction
@@ -70,7 +68,7 @@ public class Transaction {
 
     }
 
-    public Object getId() {
+    public Long getId() {
         return id;
     }
 

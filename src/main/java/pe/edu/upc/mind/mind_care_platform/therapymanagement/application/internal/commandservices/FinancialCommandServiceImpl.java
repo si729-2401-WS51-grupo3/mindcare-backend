@@ -24,10 +24,12 @@ public class FinancialCommandServiceImpl implements FinancialCommandService {
 
     /**
      * Este metodo se encarga de agregar una transaccion a la lista de finanzas de un paciente
+     *
+     * @return
      */
 
     @Override
-    public void handle(AddTransactionToFinancialCommand command) {
+    public Financial handle(AddTransactionToFinancialCommand command) {
         Long patientId = command.patientId();
         Financial financial;
         List<Financial> financials = financialRepository.findByPatientId(patientId);
@@ -43,7 +45,7 @@ public class FinancialCommandServiceImpl implements FinancialCommandService {
         int amount = command.getAmount();
         Transaction newTransaction = new Transaction(patientIdInstance, financial, pyschologistIdInstance, reservationIdInstance, amount);
         financial.addTransaction(newTransaction);
-        financialRepository.save(financial);
+        return financialRepository.save(financial);
     }
 
     @Override
@@ -62,5 +64,4 @@ public class FinancialCommandServiceImpl implements FinancialCommandService {
         financial.removeTransaction(transactionToRemove);
         financialRepository.save(financial);
     }
-
 }
