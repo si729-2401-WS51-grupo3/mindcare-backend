@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfiguration {
     @Bean
-    public OpenAPI learningPlatformOpenApi() {
+    public OpenAPI mindcarePlatformOpenApi() {
         // General configuration
         var openApi = new OpenAPI();
         openApi

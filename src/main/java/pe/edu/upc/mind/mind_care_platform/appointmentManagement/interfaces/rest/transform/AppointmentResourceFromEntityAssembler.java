@@ -6,8 +6,14 @@ import pe.edu.upc.mind.mind_care_platform.appointmentManagement.interfaces.rest.
 public class AppointmentResourceFromEntityAssembler {
     public static AppointmentResource toResourceFromEntity(Appointment entity) {
         return new AppointmentResource(
-                entity.getTitle(),
-                entity.getPsychologistId().psychologistId()
+            entity.getId(),
+            entity.getTitle(),
+            entity.getDescription(),
+            entity.getDate().toString(),
+            entity.getType().name(),
+            entity.getHour(),
+            entity.getPsychologistId().psychologistId(),
+            entity.getPatientId().patientId()
         );
     }
 }
