@@ -22,15 +22,12 @@ public class Reservation extends AuditableModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //atributos compartidos con schedule
     @Embedded
     private PsychologistId psychologistId;
 
-    //coneccion
     @ManyToOne
     @JoinColumn(name = "schedule_id")
 
-    //atributos exclusivamente de la tabla reservation
     private Schedule schedule;
 
     @Embedded
