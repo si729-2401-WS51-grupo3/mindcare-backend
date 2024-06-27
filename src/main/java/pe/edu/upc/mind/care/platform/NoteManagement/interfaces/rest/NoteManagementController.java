@@ -46,29 +46,6 @@ public class NoteManagementController {
         return new ResponseEntity<>(appointmentNoteResource, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{noteId}/update-note")
-    public ResponseEntity<AppointmentNoteResource> updateNote(@PathVariable Long noteId, @RequestBody UpdateNoteContentResource resource) {
-        if (noteId == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        var updateNoteContentCommand = AppointmentNoteCommandFromResourceAssembler.toCommandFromResource(new UpdateNoteContentResource(noteId, resource.content()));
-        Optional<AppointmentNote> appointmentNoteOptional = appointmentNoteCommandService.handle(updateNoteContentCommand);
-        if (appointmentNoteOptional.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
-        var appointmentNoteResource = AppointmentNoteResourceFromEntityAssembler.toResourceFromEntity(appointmentNoteOptional.get());
-        return new ResponseEntity<>(appointmentNoteResource, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{noteId}/delete-note")
-    public ResponseEntity<Void> deleteNote(@PathVariable Long noteId) {
-        if (noteId == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        appointmentNoteCommandService.handle(new DeleteAppointmentNoteCommand(noteId));
-        return ResponseEntity.noContent().build();
-    }
-
     @GetMapping("/all-notes")
     public ResponseEntity<List<AppointmentNoteResource>> getAllNotes() {
         var getAllAppointmentNotesQuery = new GetAllAppointmentNotesQuery();
