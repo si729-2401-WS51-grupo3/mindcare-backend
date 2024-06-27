@@ -10,8 +10,8 @@ public class AppointmentNoteResourceFromEntityAssembler {
                 entity.getId(),
                 entity.getNote().getContent(),
                 entity.getAppointmentId().id(),
-                entity.getPsychologistId().psychologistId(),
-                entity.getPatientId().patientId()
+                entity.getPsychologistId().id(),
+                entity.getPatientId().id()
         );
     }
 }

@@ -1,5 +1,6 @@
 package pe.edu.upc.mind.care.platform.therapymanagement.interfaces.rest;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.mind.care.platform.therapymanagement.application.internal.commandservices.FinancialCommandServiceImpl;
@@ -19,8 +20,11 @@ import pe.edu.upc.mind.care.platform.therapymanagement.interfaces.rest.transform
 import java.util.List;
 import java.util.Map;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
-@RequestMapping("/financial")
+@RequestMapping(value= "/api/v1/financial", produces = APPLICATION_JSON_VALUE)
+@Tag(name = "Financial", description = "Financial Management Endpoint")
 public class FinancialController {
     private final FinancialCommandServiceImpl financialCommandService;
     private final FinancialQueryServiceImpl financialQueryService;

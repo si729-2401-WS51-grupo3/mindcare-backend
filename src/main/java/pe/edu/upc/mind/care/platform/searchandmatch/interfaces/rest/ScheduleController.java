@@ -1,4 +1,5 @@
 package pe.edu.upc.mind.care.platform.searchandmatch.interfaces.rest;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping(value= "/api/v1/schedule", produces = APPLICATION_JSON_VALUE)
+@Tag(name = "SearchAndMatch", description = "SearchAndMatch Management Endpoint")
 public class ScheduleController {
     private final ScheduleCommandService scheduleCommandService;
     private final ScheduleQueryService scheduleQueryService;

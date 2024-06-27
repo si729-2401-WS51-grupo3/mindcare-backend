@@ -9,8 +9,8 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import pe.edu.upc.mind.care.platform.NoteManagement.domain.model.entities.Note;
 import pe.edu.upc.mind.care.platform.NoteManagement.domain.model.valueobjects.AppointmentId;
-import pe.edu.upc.mind.care.platform.searchandmatch.domain.model.valueobjects.PatientId;
-import pe.edu.upc.mind.care.platform.searchandmatch.domain.model.valueobjects.PsychologistId;
+import pe.edu.upc.mind.care.platform.NoteManagement.domain.model.valueobjects.PatientId;
+import pe.edu.upc.mind.care.platform.NoteManagement.domain.model.valueobjects.PsychologistId;
 
 import java.util.Date;
 
