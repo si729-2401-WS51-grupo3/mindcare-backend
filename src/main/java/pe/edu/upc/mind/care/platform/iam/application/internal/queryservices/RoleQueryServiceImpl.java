@@ -1,11 +1,11 @@
 package pe.edu.upc.mind.care.platform.iam.application.internal.queryservices;
 
 import org.springframework.stereotype.Service;
-import pe.edu.upc.center.platform.iam.domain.model.entities.Role;
-import pe.edu.upc.center.platform.iam.domain.model.queries.GetAllRolesQuery;
-import pe.edu.upc.center.platform.iam.domain.model.queries.GetRoleByNameQuery;
-import pe.edu.upc.center.platform.iam.domain.services.RoleQueryService;
-import pe.edu.upc.center.platform.iam.infrastructure.persistence.jpa.repositories.RoleRepository;
+import pe.edu.upc.mind.care.platform.iam.domain.model.entities.Role;
+import pe.edu.upc.mind.care.platform.iam.domain.model.queries.GetAllRolesQuery;
+import pe.edu.upc.mind.care.platform.iam.domain.model.queries.GetRoleByNameQuery;
+import pe.edu.upc.mind.care.platform.iam.domain.services.RoleQueryService;
+import pe.edu.upc.mind.care.platform.iam.infrastructure.persistence.jpa.repositories.RoleRepository;
 
 import java.util.List;
 import java.util.Optional;

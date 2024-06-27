@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pe.edu.upc.center.platform.iam.domain.model.queries.GetAllUsersQuery;
-import pe.edu.upc.center.platform.iam.domain.model.queries.GetUserByIdQuery;
-import pe.edu.upc.center.platform.iam.domain.services.UserQueryService;
-import pe.edu.upc.center.platform.iam.interfaces.rest.resources.UserResource;
-import pe.edu.upc.center.platform.iam.interfaces.rest.transform.UserResourceFromEntityAssembler;
+import pe.edu.upc.mind.care.platform.iam.domain.model.queries.GetAllUsersQuery;
+import pe.edu.upc.mind.care.platform.iam.domain.model.queries.GetUserByIdQuery;
+import pe.edu.upc.mind.care.platform.iam.domain.services.UserQueryService;
+import pe.edu.upc.mind.care.platform.iam.interfaces.rest.resources.UserResource;
+import pe.edu.upc.mind.care.platform.iam.interfaces.rest.transform.UserResourceFromEntityAssembler;
 
 import java.util.List;
 

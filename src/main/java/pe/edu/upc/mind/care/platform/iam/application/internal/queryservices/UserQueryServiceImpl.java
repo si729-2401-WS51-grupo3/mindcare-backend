@@ -1,12 +1,12 @@
 package pe.edu.upc.mind.care.platform.iam.application.internal.queryservices;
 
 import org.springframework.stereotype.Service;
-import pe.edu.upc.center.platform.iam.domain.model.aggregates.User;
-import pe.edu.upc.center.platform.iam.domain.model.queries.GetAllUsersQuery;
-import pe.edu.upc.center.platform.iam.domain.model.queries.GetUserByIdQuery;
-import pe.edu.upc.center.platform.iam.domain.model.queries.GetUserByUsernameQuery;
-import pe.edu.upc.center.platform.iam.domain.services.UserQueryService;
-import pe.edu.upc.center.platform.iam.infrastructure.persistence.jpa.repositories.UserRepository;
+import pe.edu.upc.mind.care.platform.iam.domain.model.aggregates.User;
+import pe.edu.upc.mind.care.platform.iam.domain.model.queries.GetAllUsersQuery;
+import pe.edu.upc.mind.care.platform.iam.domain.model.queries.GetUserByIdQuery;
+import pe.edu.upc.mind.care.platform.iam.domain.model.queries.GetUserByUsernameQuery;
+import pe.edu.upc.mind.care.platform.iam.domain.services.UserQueryService;
+import pe.edu.upc.mind.care.platform.iam.infrastructure.persistence.jpa.repositories.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
