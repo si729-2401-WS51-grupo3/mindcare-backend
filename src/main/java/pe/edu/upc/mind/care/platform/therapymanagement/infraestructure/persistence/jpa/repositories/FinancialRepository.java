@@ -16,7 +16,7 @@ public interface FinancialRepository extends JpaRepository<Financial, Long> {
     List<Financial> findByPatientId(Long patientId);
     @Query("SELECT t FROM Transaction t WHERE t.financial.patientId = :patientId")
     List<Transaction> findAllTransactionsByPatientId(@Param("patientId") Long patientId);
-//cambie el fiana
+//cambie el financial.id por financial.financialId
     @Query("SELECT t FROM Transaction t WHERE t.financial.financial_id = :financialId")
     List<Transaction> findAllTransactionsByFinancialId(@Param("financialId") Long financialId);
 }
