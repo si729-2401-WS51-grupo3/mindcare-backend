@@ -16,11 +16,14 @@ import java.util.Set;
 @Setter
 @Entity
 public class User extends AuditableAbstractAggregateRoot<User> {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   @NotBlank
   @Size(max = 50)
   @Column(unique = true)
-  private String username;
+  private String email;
 
   @NotBlank
   @Size(max = 120)
@@ -35,14 +38,14 @@ public class User extends AuditableAbstractAggregateRoot<User> {
   public User() {
     this.roles = new HashSet<>();
   }
-  public User(String username, String password) {
-    this.username = username;
+  public User(String email, String password) {
+    this.email = email;
     this.password = password;
     this.roles = new HashSet<>();
   }
 
-  public User(String username, String password, List<Role> roles) {
-    this(username, password);
+  public User(String email, String password, List<Role> roles) {
+    this(email, password);
     addRoles(roles);
   }
 

@@ -11,7 +11,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
-import pe.edu.upc.mind.care.platform.iam.infrastructure.authorization.sfs.model.UsernamePasswordAuthenticationTokenBuilder;
+import pe.edu.upc.mind.care.platform.iam.infrastructure.authorization.sfs.model.EmailPasswordAuthenticationTokenBuilder;
 import pe.edu.upc.mind.care.platform.iam.infrastructure.tokens.jwt.BearerTokenService;
 
 import java.io.IOException;
@@ -54,11 +54,11 @@ public class BearerAuthorizationRequestFilter extends OncePerRequestFilter {
       String token = tokenService.getBearerTokenFrom(request);
       LOGGER.info("Token: {}", token);
       if (token != null && tokenService.validateToken(token)) {
-        String username = tokenService.getUsernameFromToken(token);
-        var userDetails = userDetailsService.loadUserByUsername(username);
+        String Email = tokenService.getEmailFromToken(token);
+        var userDetails = userDetailsService.loadUserByUsername(Email);
         SecurityContextHolder.getContext()
             .setAuthentication(
-                UsernamePasswordAuthenticationTokenBuilder.build(userDetails, request));
+                EmailPasswordAuthenticationTokenBuilder.build(userDetails, request));
       }
       else {
         LOGGER.info("Token is not valid");

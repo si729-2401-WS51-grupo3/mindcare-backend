@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import pe.edu.upc.mind.care.platform.iam.infrastructure.authorization.sfs.model.UserDetailsImpl;
 import pe.edu.upc.mind.care.platform.iam.infrastructure.persistence.jpa.repositories.UserRepository;
 
+
 /**
  * This class is responsible for providing the user details to the Spring Security framework.
  * It implements the UserDetailsService interface.
@@ -22,15 +23,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   /**
    * This method is responsible for loading the user details from the database.
-   * @param username The username.
+   * @param email The username.
    * @return The UserDetails object.
    * @throws UsernameNotFoundException If the user is not found.
    */
   @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    var user = userRepository.findByUsername(username)
-        .orElseThrow(
-            () -> new UsernameNotFoundException("User not found with username: " + username));
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    var user = userRepository.findByEmail(email)
+            .orElseThrow(
+                    () -> new UsernameNotFoundException("User not found with username: " + email));
     return UserDetailsImpl.build(user);
   }
 }

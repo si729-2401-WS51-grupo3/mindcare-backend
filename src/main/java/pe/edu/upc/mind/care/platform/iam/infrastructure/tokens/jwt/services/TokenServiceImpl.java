@@ -44,26 +44,26 @@ public class TokenServiceImpl implements BearerTokenService {
   }
 
   /**
-   * This method generates a JWT token from a username
-   * @param username the username
+   * This method generates a JWT token from a Email
+   * @param email the Email
    * @return String the JWT token
    */
-  public String generateToken(String username) {
-    return buildTokenWithDefaultParameters(username);
+  public String generateToken(String email) {
+    return buildTokenWithDefaultParameters(email);
   }
 
   /**
-   * This method generates a JWT token from a username and a secret.
+   * This method generates a JWT token from a Email and a secret.
    * It uses the default expiration days from the application.properties file.
-   * @param username the username
+   * @param email the Email
    * @return String the JWT token
    */
-  private String buildTokenWithDefaultParameters(String username) {
+  private String buildTokenWithDefaultParameters(String email) {
     var issuedAt = new Date();
     var expiration = DateUtils.addDays(issuedAt, expirationDays);
     var key = getSigningKey();
     return Jwts.builder()
-        .subject(username)
+        .subject(email)
         .issuedAt(issuedAt)
         .expiration(expiration)
         .signWith(key)
@@ -71,12 +71,12 @@ public class TokenServiceImpl implements BearerTokenService {
   }
 
   /**
-   * This method extracts the username from a JWT token
+   * This method extracts the Email from a JWT token
    * @param token the token
-   * @return String the username
+   * @return String the Email
    */
   @Override
-  public String getUsernameFromToken(String token) {
+  public String getEmailFromToken(String token) {
     return extractClaim(token, Claims::getSubject);
   }
 

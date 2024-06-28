@@ -3,8 +3,8 @@ package pe.edu.upc.mind.care.platform.iam.application.internal.queryservices;
 import org.springframework.stereotype.Service;
 import pe.edu.upc.mind.care.platform.iam.domain.model.aggregates.User;
 import pe.edu.upc.mind.care.platform.iam.domain.model.queries.GetAllUsersQuery;
+import pe.edu.upc.mind.care.platform.iam.domain.model.queries.GetUserByEmailQuery;
 import pe.edu.upc.mind.care.platform.iam.domain.model.queries.GetUserByIdQuery;
-import pe.edu.upc.mind.care.platform.iam.domain.model.queries.GetUserByUsernameQuery;
 import pe.edu.upc.mind.care.platform.iam.domain.services.UserQueryService;
 import pe.edu.upc.mind.care.platform.iam.infrastructure.persistence.jpa.repositories.UserRepository;
 
@@ -50,13 +50,13 @@ public class UserQueryServiceImpl implements UserQueryService {
   }
 
   /**
-   * This method is used to handle {@link GetUserByUsernameQuery} query.
-   * @param query {@link GetUserByUsernameQuery} instance.
+   * This method is used to handle {@link GetUserByEmailQuery} query.
+   * @param query {@link GetUserByEmailQuery} instance.
    * @return {@link Optional} of {@link User} instance.
-   * @see GetUserByUsernameQuery
+   * @see GetUserByEmailQuery
    */
   @Override
-  public Optional<User> handle(GetUserByUsernameQuery query) {
-    return userRepository.findByUsername(query.username());
+  public Optional<User> handle(GetUserByEmailQuery query) {
+    return userRepository.findByEmail(query.email());
   }
 }

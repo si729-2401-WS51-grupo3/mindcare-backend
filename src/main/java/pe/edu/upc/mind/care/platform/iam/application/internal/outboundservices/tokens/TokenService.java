@@ -7,18 +7,18 @@ package pe.edu.upc.mind.care.platform.iam.application.internal.outboundservices.
 public interface TokenService {
 
   /**
-   * Generate a token for a given username
-   * @param username the username
+   * Generate a token for a given Email
+   * @param email the Email
    * @return String the token
    */
-  String generateToken(String username);
+  String generateToken(String email);
 
   /**
-   * Extract the username from a token
+   * Extract the Email from a token
    * @param token the token
-   * @return String the username
+   * @return String the Email
    */
-  String getUsernameFromToken(String token);
+  String getEmailFromToken(String token);
 
   /**
    * Validate a token

@@ -6,6 +6,6 @@ import pe.edu.upc.mind.care.platform.iam.interfaces.rest.resources.SignInResourc
 public class SignInCommandFromResourceAssembler {
 
   public static SignInCommand toCommandFromResource(SignInResource signInResource) {
-    return new SignInCommand(signInResource.username(), signInResource.password());
+    return new SignInCommand(signInResource.Email(), signInResource.password());
   }
 }

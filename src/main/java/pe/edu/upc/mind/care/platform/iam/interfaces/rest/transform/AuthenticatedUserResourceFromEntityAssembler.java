@@ -6,6 +6,6 @@ import pe.edu.upc.mind.care.platform.iam.interfaces.rest.resources.Authenticated
 public class AuthenticatedUserResourceFromEntityAssembler {
 
   public static AuthenticatedUserResource toResourceFromEntity(User user, String token) {
-    return new AuthenticatedUserResource(user.getId(), user.getUsername(), token);
+    return new AuthenticatedUserResource(user.getId(), user.getEmail(), token);
   }
 }
