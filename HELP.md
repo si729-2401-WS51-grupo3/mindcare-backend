@@ -1,4 +1,4 @@
-# Read Me First
+# Read Me
 The following was discovered as part of building this project:
 
 * The original package name 'pe.edu.upc.mind.mind-care-platform' is invalid and this project uses 'pe.edu.upc.mind.mind_care_platform' instead.
